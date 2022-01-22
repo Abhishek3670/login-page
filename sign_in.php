@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -28,7 +28,7 @@
                         <!-- form starting -->
                         <form method="POST" class="register-form" id="login-form" action="include/signin.inc.php">
                             <?php if (isset($_GET['error'])) { ?>
-                                <p class="error"><?php echo $_GET['error']; ?></p>
+                                <p class="error">Wrong Password</p>
                             <?php } ?>
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>

@@ -781,13 +781,13 @@ label.valid:after {
 }
 .error {
   width: 92%;
-  margin: 0px auto;
-  padding: 10px;
+  padding:10px;
+  margin: 0px 0px 10px 0px;
   border: 1px solid #a94442;
   color: #a94442;
   background: #f2dede;
   border-radius: 5px;
-  text-align: left;
+  text-align: center;
 }
 .success {
   color: #3c763d;

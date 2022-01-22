@@ -53,7 +53,7 @@ function pwdMatch($password, $rpassword)
 }
 function userExist($conn, $name, $email)
 {
-    $query = "SELECT * FROM users WHERE name=? OR email=?;";
+    $query = "SELECT * FROM users WHERE name=? OR email=?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $query)) {
         header("location : ../sign_up.php?error=stmtfailed");
@@ -67,9 +67,8 @@ function userExist($conn, $name, $email)
 
     if ($row = mysqli_fetch_assoc($result)) {
         return $row;
-    } else {
-        $result = false;
-        return $result;
+    } else {    
+        return $result=false;
     }
     mysqli_stmt_close($stmt);
 }
