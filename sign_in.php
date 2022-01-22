@@ -1,8 +1,3 @@
-<?php
-include('server.php');
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +26,7 @@ include('server.php');
                     <div class="signin-form">
                         <h2 class="form-title">Sign in</h2>
                         <!-- form starting -->
-                        <form method="POST" class="register-form" id="login-form" action="sign_in.php">
+                        <form method="POST" class="register-form" id="login-form" action="include/signin.inc.php">
                             <?php if (isset($_GET['error'])) { ?>
                                 <p class="error"><?php echo $_GET['error']; ?></p>
                             <?php } ?>
@@ -61,6 +56,13 @@ include('server.php');
                                 <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
                         </div>
+                        <?php
+                        if(isset($_GET['error'])){
+                            if($_GET['error'] == "emptyinput"){
+                                echo "<p>Empty Input</p>";
+                            }                            
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

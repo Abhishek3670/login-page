@@ -1,9 +1,3 @@
-<?php
-
-require_once "server.php";
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +8,6 @@ require_once "server.php";
     <title>Sign Up</title>
 
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -28,7 +21,7 @@ require_once "server.php";
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
                         <!-- form starting -->
-                        <form method="POST" class="register-form" id="register-form" action="">
+                        <form method="POST" class="register-form" id="register-form" action="include/signup.inc.php">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="name" id="name" placeholder="Your Name" />
@@ -54,6 +47,28 @@ require_once "server.php";
                             </div>
                         </form>
                         <!-- form ending -->
+                        <?php
+                        if(isset($_GET['error'])){
+                            if($_GET['error'] == "emptyinput"){
+                                echo "<p>Empty Input</p>";
+                            }
+                            if($_GET['error'] == "invalidUser"){
+                                echo "<p>Invalid User</p>";
+                            }
+                            if($_GET['error'] == "invalidEmail"){
+                                echo "<p>Email is Incorrect</p>";
+                            }
+                            if($_GET['error'] == "passwordDoNotMatch"){
+                                echo "<p>Password Do Not Matched</p>";
+                            }
+                            if($_GET['error'] == "userExist"){
+                                echo "<p>User Exist</p>";
+                            }
+                            if($_GET['error'] == "stmtfailed"){
+                                echo "<p>Something Went Wrong!!</p>";
+                            }
+                        }
+                        ?>
                     </div>
                     <div class="signup-image">
                         <figure><img src="images/signup-image.jpg" alt="sing up image"></figure>

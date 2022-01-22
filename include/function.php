@@ -1,4 +1,5 @@
 <?php
+
 function emptyInputSignUp($name, $email, $password, $rpassword)
 {
     $result = "";
@@ -9,6 +10,17 @@ function emptyInputSignUp($name, $email, $password, $rpassword)
     }
     return $result;
 }
+function emptyInputSignIn($email, $password)
+{
+    $result = "";
+    if ( empty($email) || empty($password)) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
 function invalidUser($name)
 {
     $result = "";
@@ -44,7 +56,7 @@ function userExist($conn, $name, $email)
     $query = "SELECT * FROM users WHERE name=? OR email=?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $query)) {
-        header("location : sign_up.php?error=stmtfailed");
+        header("location : ../sign_up.php?error=stmtfailed");
         exit();
     }
 
@@ -67,7 +79,7 @@ function  createUser($conn, $name, $email, $password)
     $query = "INSERT INTO users (name,email,password) VALUES (?,?,?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $query)) {
-        header("location : sign_up.php?error=stmtfailed");
+        header("location : ../sign_up.php?error=stmtfailed");
         exit();
     }
     $hashedPwd = password_hash($password,PASSWORD_DEFAULT);
@@ -76,7 +88,31 @@ function  createUser($conn, $name, $email, $password)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     
-    header("location : sign_up.php?error=none");
+    header("location : ../sign_in.php");
     exit();
     
+}
+
+function loginUser($conn , $email,$password){
+    $userExists = userExist($conn,$email,$email);
+    if($userExists === false)
+    {
+        header("location : ../sign_in.php?userExist");
+        exit();
+    }
+
+    $pwdHashed = $userExists["password"];
+    $checkPwd = password_verify($password,$pwdHashed);
+
+    if($checkPwd){
+        header("location: ../sign_in.php?error=wrongSignin");
+        exit();
+    }
+    else{
+            session_start();
+            $_SESSION["username"] = $userExists["name"];
+            header("location: ../pages/home.php");
+            exit();
+
+    }
 }
