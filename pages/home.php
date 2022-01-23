@@ -12,7 +12,7 @@
 <body>
   <div class="navbar">
     <div class="container">
-      <a class="logo" href="home.html">Ad<span>It</span></a>
+      <a class="logo" href="home.php">Ad<span>It</span></a>
       <img id="mobile-cta" class="mobile-menu" src="assets/svg/menu.svg" alt="Open navigation" />
       <nav>
         <img id="mobile-exit" class="mobile-menu-exit" src="assets/svg/exit.svg" alt="Close navigation" />

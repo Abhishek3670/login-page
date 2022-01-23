@@ -33,11 +33,12 @@ function invalidUser($name)
 }
 function invalidEmail($email)
 {
-    $result = "";
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $result = true;
-    } else {
-        $result = false;
+    $result="";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $result=false;
+    } 
+    else {
+        $result=true;
     }
     return $result;
 }
@@ -51,16 +52,15 @@ function pwdMatch($password, $rpassword)
     }
     return $result;
 }
-function userExist($conn, $name, $email)
+function userExist($conn, $email)
 {
-    $query = "SELECT * FROM users WHERE name=? OR email=?";
+    $query = "SELECT * FROM users WHERE email='$email'";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $query)) {
-        header("location : ../sign_up.php?error=stmtfailed");
+        header("location: ../sign_up.php?error=stmtfailed");
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "ss", $name, $email);
     mysqli_stmt_execute($stmt);
 
     $result = mysqli_stmt_get_result($stmt);
@@ -75,36 +75,36 @@ function userExist($conn, $name, $email)
 
 function  createUser($conn, $name, $email, $password)
 {
-    $query = "INSERT INTO users (name,email,password) VALUES (?,?,?);";
+    
+    $hashedPwd = password_hash($password,PASSWORD_DEFAULT);
+    $query = "INSERT INTO users (name,email,password) VALUES ('$name','$email','$hashedPwd');";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $query)) {
-        header("location : ../sign_up.php?error=stmtfailed");
+        header("location: ../sign_up.php?error=stmtfailed");
         exit();
     }
-    $hashedPwd = password_hash($password,PASSWORD_DEFAULT);
-
-    mysqli_stmt_bind_param($stmt, "sss", $name, $email,$hashedPwd);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     
-    header("location : ../sign_in.php");
+    header("location: ../sign_in.php");
     exit();
     
 }
 
 function loginUser($conn , $email,$password){
-    $userExists = userExist($conn,$email,$email);
+    $userExists = userExist($conn,$email);
     if($userExists === false)
     {
-        header("location : ../sign_in.php?userExist");
+        header("location: ../sign_in.php?userDoesNotExist");
         exit();
     }
 
     $pwdHashed = $userExists["password"];
+    echo 
     $checkPwd = password_verify($password,$pwdHashed);
 
-    if($checkPwd){
-        header("location: ../sign_in.php?error=wrongSignin");
+    if(!$checkPwd){
+        header("location: ../sign_in.php?error=wrongPassword");
         exit();
     }
     else{
